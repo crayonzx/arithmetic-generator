@@ -1,5 +1,9 @@
+/**
+ * 常量定义
+ */
+
 /** 运算符 */
-export const enum Operator {
+export /*const*/ enum Operator {
   Addition = "+",
   Subtraction = "-",
   Multiplication = "×",
@@ -8,7 +12,7 @@ export const enum Operator {
 }
 
 /** 优先级 */
-export const enum Priority {
+export /*const*/ enum Priority {
   Addition = 1,
   Subtraction = 1,
   Multiplication = 2,
@@ -16,4 +20,11 @@ export const enum Priority {
   Power = 3,
   /** 数字的优先级最大 */
   Number = 9
+}
+
+/** 难度等级 */
+export /*const*/ enum Level {
+  Low = 1,
+  Medium = 2,
+  High = 3
 }
