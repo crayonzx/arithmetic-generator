@@ -39,7 +39,7 @@ export abstract class BinaryExpression implements Expression {
 
   protected printRight() {
     const right = this.right.print();
-    if (this.right.getPriority() >= this.getPriority()) {
+    if (this.right.getPriority() < this.getPriority()) {
       // 右侧表达式优先级较低，需加括号
       return `(${right})`;
     }
