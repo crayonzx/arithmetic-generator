@@ -53,6 +53,10 @@ export class Fraction implements RationalNumber {
     }
     return `${this.value.toFraction(false)}`;
   }
+
+  toString() {
+    return `${this.value.toFraction(false)}`;
+  }
 }
 
 /** 整数，它可以认为是分母为 1 的一种特殊分数 */

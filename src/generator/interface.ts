@@ -21,4 +21,7 @@ export interface RationalNumber extends Expression {
   mul(rhs: RationalNumber): RationalNumber;
   div(rhs: RationalNumber): RationalNumber;
   pow(rhs: RationalNumber): RationalNumber;
+
+  /** 转为字符串，与print的区别是它不会输出括号 */
+  toString(): string;
 }
