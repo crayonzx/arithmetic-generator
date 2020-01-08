@@ -1,3 +1,7 @@
+/**
+ * 表达式
+ */
+
 import { Operator, Priority } from "./const";
 import { Expression, RationalNumber } from "./interface";
 import { Integer } from "./number";

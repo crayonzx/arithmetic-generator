@@ -1,10 +1,14 @@
+/**
+ * 有理数：整数和分数
+ */
+
 import { default as JSFraction } from "fraction.js";
 
 import { Priority } from "./const";
-import { RationalNumber, Expression } from "./interface";
+import { RationalNumber } from "./interface";
 
 /** 分数 */
-export class Fraction implements RationalNumber, Expression {
+export class Fraction implements RationalNumber {
   private value: JSFraction;
 
   constructor(numerator: number, denominator: number) {
@@ -51,7 +55,7 @@ export class Fraction implements RationalNumber, Expression {
   }
 }
 
-/** 整数（可以认为是分母为1的特殊分数） */
+/** 整数，它可以认为是分母为 1 的一种特殊分数 */
 export class Integer extends Fraction {
   constructor(value = 0) {
     super(Math.floor(value), 1);

@@ -1,15 +1,8 @@
-import { Priority } from "./const";
+/**
+ * 接口定义
+ */
 
-/** 有理数 */
-export interface RationalNumber {
-  add(rhs: RationalNumber): RationalNumber;
-  sub(rhs: RationalNumber): RationalNumber;
-  mul(rhs: RationalNumber): RationalNumber;
-  div(rhs: RationalNumber): RationalNumber;
-  pow(rhs: RationalNumber): RationalNumber;
-  /** 打印输出字符串 */
-  print(): string;
-}
+import { Priority } from "./const";
 
 /** 表达式 */
 export interface Expression {
@@ -19,4 +12,13 @@ export interface Expression {
   calculate(): RationalNumber;
   /** 打印输出字符串 */
   print(): string;
+}
+
+/** 有理数，它也是一种特殊的表达式 */
+export interface RationalNumber extends Expression {
+  add(rhs: RationalNumber): RationalNumber;
+  sub(rhs: RationalNumber): RationalNumber;
+  mul(rhs: RationalNumber): RationalNumber;
+  div(rhs: RationalNumber): RationalNumber;
+  pow(rhs: RationalNumber): RationalNumber;
 }
