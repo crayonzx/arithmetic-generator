@@ -35,6 +35,12 @@ class ValidatorImp implements Visitor {
     console.assert(false);
     return true;
   }
+  private isZero(expression: Expression): boolean {
+    return expression.calculate().equals(0);
+  }
+  private isOne(expression: Expression): boolean {
+    return expression.calculate().equals(1);
+  }
 
   private checkResult(result: boolean) {
     if (!result) this.isValid = result;
@@ -52,17 +58,35 @@ class ValidatorImp implements Visitor {
     return true;
   }
   visitAdd(add: BinaryExpression): boolean {
-    return this.checkResult(this.isValidNumber(add.calculate()));
+    return this.checkResult(
+      !this.isZero(add.getLeft()) &&
+        !this.isZero(add.getRight()) &&
+        this.isValidNumber(add.calculate())
+    );
   }
   visitSub(sub: BinaryExpression): boolean {
-    return this.checkResult(this.isValidNumber(sub.calculate()));
+    return this.checkResult(
+      !this.isZero(sub.getLeft()) &&
+        !this.isZero(sub.getRight()) &&
+        this.isValidNumber(sub.calculate())
+    );
   }
   visitMul(mul: BinaryExpression): boolean {
-    return this.checkResult(this.isValidNumber(mul.calculate()));
+    return this.checkResult(
+      !this.isZero(mul.getLeft()) &&
+        !this.isZero(mul.getRight()) &&
+        !this.isOne(mul.getLeft()) &&
+        !this.isOne(mul.getRight()) &&
+        this.isValidNumber(mul.calculate())
+    );
   }
   visitDiv(div: BinaryExpression): boolean {
     // 除法的除数不能为0
-    const right = div.getRight().calculate();
-    return this.checkResult(!right.equals(0) && this.isValidNumber(div.calculate()));
+    return this.checkResult(
+      !this.isZero(div.getLeft()) &&
+        !this.isZero(div.getRight()) &&
+        !this.isOne(div.getRight()) &&
+        this.isValidNumber(div.calculate())
+    );
   }
 }
