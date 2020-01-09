@@ -6,7 +6,13 @@
  */
 
 import { Operator } from "./const";
-import { BinaryExpression, AddExpression, SubExpression } from "./expression";
+import {
+  BinaryExpression,
+  AddExpression,
+  SubExpression,
+  MulExpression,
+  DivExpression
+} from "./expression";
 import { randomInt } from "./utils";
 
 /** 表达式工厂 */
@@ -20,7 +26,9 @@ export class ExpressionFactory {
 
   private expressionByOperator = {
     [new AddExpression().getOperator()]: AddExpression,
-    [new SubExpression().getOperator()]: SubExpression
+    [new SubExpression().getOperator()]: SubExpression,
+    [new MulExpression().getOperator()]: MulExpression,
+    [new DivExpression().getOperator()]: DivExpression
   };
 
   newExpression(operator: Operator): BinaryExpression {

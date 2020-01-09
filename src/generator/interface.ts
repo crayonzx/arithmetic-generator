@@ -24,6 +24,9 @@ export interface RationalNumber extends Expression {
   div(rhs: RationalNumber): RationalNumber;
   pow(rhs: RationalNumber): RationalNumber;
 
+  /** 比较两个表达式是否相同或等价 */
+  equals(rhs: Expression | number): boolean;
+
   /** 转为字符串，与print的区别是它不会输出括号 */
   toString(): string;
 }

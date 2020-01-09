@@ -64,9 +64,12 @@ export class Fraction implements RationalNumber {
     return `${this.value.toFraction(false)}`;
   }
 
-  equals(rhs: Expression) {
+  equals(rhs: Expression | number) {
     if (rhs instanceof Fraction) {
       return this.value.equals(rhs.value);
+    }
+    if (typeof rhs === "number") {
+      return this.value.equals(rhs);
     }
     return false;
   }

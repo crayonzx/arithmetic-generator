@@ -6,7 +6,7 @@
 
 import { Operator, Priority } from "./const";
 import { Expression, RationalNumber } from "./interface";
-import { Integer } from "./number";
+import { Integer, Fraction } from "./number";
 
 /** 二元表达式 */
 export abstract class BinaryExpression implements Expression {
@@ -101,6 +101,48 @@ export class SubExpression extends BinaryExpression {
 
   calculate() {
     return this.left.calculate().sub(this.right.calculate());
+  }
+
+  isCommutative(): boolean {
+    return false;
+  }
+}
+
+/** 乘法 */
+export class MulExpression extends BinaryExpression {
+  getOperator(): Operator {
+    return Operator.Multiplication;
+  }
+
+  getPriority(): Priority {
+    return Priority.Multiplication;
+  }
+
+  calculate() {
+    return this.left.calculate().mul(this.right.calculate());
+  }
+
+  isCommutative(): boolean {
+    return true;
+  }
+}
+
+/** 除法 */
+export class DivExpression extends BinaryExpression {
+  getOperator(): Operator {
+    return Operator.Division;
+  }
+
+  getPriority(): Priority {
+    return Priority.Division;
+  }
+
+  calculate() {
+    const rightValue = this.right.calculate();
+    if (rightValue.equals(0)) {
+      return new Fraction(NaN, 1);
+    }
+    return this.left.calculate().div(this.right.calculate());
   }
 
   isCommutative(): boolean {
