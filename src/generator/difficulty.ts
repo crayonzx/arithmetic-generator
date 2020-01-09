@@ -1,10 +1,11 @@
 /**
  * 难度策略
  *
+ * 单例模式
  * 策略工厂模式
  */
 
-import { Level } from "./const";
+import { Level, Operator } from "./const";
 import { RationalNumber } from "./interface";
 import { Integer } from "./number";
 import { BinaryExpression } from "./expression";
@@ -24,7 +25,16 @@ export interface DifficultyStrategy {
 }
 
 /** 简单难度 */
-export class LowDifficultyStrategy implements DifficultyStrategy {
+export class EasyStrategy implements DifficultyStrategy {
+  /** 单例模式 */
+  private static instance: EasyStrategy;
+  static getInstance(): EasyStrategy {
+    if (!this.instance) this.instance = new EasyStrategy();
+    return this.instance;
+  }
+
+  private operators = [Operator.Addition, Operator.Subtraction];
+
   getDifficulty(): Level {
     return Level.Low;
   }
@@ -41,20 +51,13 @@ export class LowDifficultyStrategy implements DifficultyStrategy {
 
 /** 难度策略工厂 */
 export class StrategyFactory implements DifficultyStrategy {
-  private difficultyStrategies: { [x in Level]: DifficultyStrategy };
-  private current: DifficultyStrategy;
-
-  constructor() {
-    this.difficultyStrategies = {} as StrategyFactory["difficultyStrategies"];
-    [LowDifficultyStrategy].forEach(difficultyClass => {
-      const difficulty = new difficultyClass();
-      this.difficultyStrategies[difficulty.getDifficulty()] = difficulty;
-    });
-    this.current = this.difficultyStrategies[Level.Low];
-  }
+  private strategyByLevel = {
+    [EasyStrategy.getInstance().getDifficulty()]: EasyStrategy.getInstance()
+  };
+  private current!: DifficultyStrategy;
 
   setDifficulty(level: Level) {
-    this.current = this.difficultyStrategies[level];
+    this.current = this.strategyByLevel[level];
   }
 
   getDifficulty(): Level {
