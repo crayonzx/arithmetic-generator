@@ -15,11 +15,19 @@ export abstract class BinaryExpression implements Expression {
   /** 右侧表达式 */
   protected right: Expression = new Integer();
 
-  setLeftExpression(left: Expression) {
+  getLeft() {
+    return this.left;
+  }
+
+  getRight() {
+    return this.right;
+  }
+
+  setLeft(left: Expression) {
     this.left = left;
   }
 
-  setRightExpression(right: Expression) {
+  setRight(right: Expression) {
     this.right = right;
   }
 

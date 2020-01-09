@@ -59,13 +59,13 @@ export class ExpressionGenerator {
 
     function getLeftSetter(binary: BinaryExpression) {
       return (expression: Expression) => {
-        binary.setLeftExpression(expression);
+        binary.setLeft(expression);
       };
     }
 
     function getRightSetter(binary: BinaryExpression) {
       return (expression: Expression) => {
-        binary.setRightExpression(expression);
+        binary.setRight(expression);
       };
     }
   }
