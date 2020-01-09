@@ -1,10 +1,13 @@
 /**
  * 表达式生成器
+ *
+ * 装饰模式
  */
 
 import { DifficultyStrategy } from "./difficulty";
 import { Expression } from "./interface";
 import { BinaryExpression } from "./expression";
+import { Validator } from "./validator";
 import { randomInt } from "./utils";
 
 /** 试卷 */
@@ -22,9 +25,15 @@ export class ExamPaper {
   }
 }
 
+export interface Generator {
+  setStrategy(strategy: DifficultyStrategy): void;
+  generate(): BinaryExpression;
+}
+
 /** 表达式生成器 */
-export class ExpressionGenerator {
+export class ExpressionGenerator implements Generator {
   private strategy!: DifficultyStrategy;
+  protected validator = new Validator();
 
   setStrategy(strategy: DifficultyStrategy) {
     this.strategy = strategy;
@@ -71,8 +80,48 @@ export class ExpressionGenerator {
   }
 }
 
+/**
+ * 经过验证符合要求的表达式生成器
+ *
+ * 装饰模式
+ */
+export class ValidatedGenerator implements Generator {
+  private generator: Generator = new ExpressionGenerator();
+  private validator: Validator = new Validator();
+
+  setGenerator(generator: Generator) {
+    this.generator = generator;
+  }
+
+  setStrategy(strategy: DifficultyStrategy) {
+    this.generator.setStrategy(strategy);
+  }
+
+  generate() {
+    let expression: BinaryExpression;
+    do {
+      expression = this.generator.generate();
+    } while (!this.validator.validate(expression));
+    return expression;
+  }
+}
+
 /** 试卷生成器 */
-export class PaperGenerator extends ExpressionGenerator {
+export class PaperGenerator implements Generator {
+  private generator: Generator = new ValidatedGenerator();
+
+  setGenerator(generator: Generator) {
+    this.generator = generator;
+  }
+
+  setStrategy(strategy: DifficultyStrategy) {
+    this.generator.setStrategy(strategy);
+  }
+
+  generate(): BinaryExpression {
+    return this.generator.generate();
+  }
+
   generatePaper(expressionCount: number): ExamPaper {
     const expressions: BinaryExpression[] = [];
     while (expressionCount > 0) {
