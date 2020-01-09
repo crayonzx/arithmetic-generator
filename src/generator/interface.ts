@@ -46,4 +46,5 @@ export interface Visitor {
   visitSub(sub: BinaryExpression): boolean;
   visitMul(mul: BinaryExpression): boolean;
   visitDiv(div: BinaryExpression): boolean;
+  visitPow(pow: BinaryExpression): boolean;
 }

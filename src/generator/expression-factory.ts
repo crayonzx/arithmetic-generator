@@ -11,7 +11,8 @@ import {
   AddExpression,
   SubExpression,
   MulExpression,
-  DivExpression
+  DivExpression,
+  PowExpression
 } from "./expression";
 import { randomInt } from "./utils";
 
@@ -28,7 +29,8 @@ export class ExpressionFactory {
     [new AddExpression().getOperator()]: AddExpression,
     [new SubExpression().getOperator()]: SubExpression,
     [new MulExpression().getOperator()]: MulExpression,
-    [new DivExpression().getOperator()]: DivExpression
+    [new DivExpression().getOperator()]: DivExpression,
+    [new PowExpression().getOperator()]: PowExpression
   };
 
   newExpression(operator: Operator): BinaryExpression {

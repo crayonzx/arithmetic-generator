@@ -176,3 +176,26 @@ export class DivExpression extends BinaryExpression {
     return visitor.visitDiv(this);
   }
 }
+
+/** 乘方 */
+export class PowExpression extends BinaryExpression {
+  getOperator(): Operator {
+    return Operator.Power;
+  }
+
+  getPriority(): Priority {
+    return Priority.Power;
+  }
+
+  calculate() {
+    return this.left.calculate().pow(this.right.calculate());
+  }
+
+  isCommutative(): boolean {
+    return false;
+  }
+
+  acceptThis(visitor: Visitor): boolean {
+    return visitor.visitPow(this);
+  }
+}

@@ -8,6 +8,7 @@
 import { Expression, Visitor, RationalNumber } from "./interface";
 import { Fraction, Integer } from "./number";
 import { BinaryExpression } from "./expression";
+import { randomInt } from "./utils";
 
 export class Validator {
   private imp = new ValidatorImp();
@@ -86,5 +87,27 @@ class ValidatorImp implements Visitor {
         !right.equals(1) &&
         this.isValidNumber(left.div(right))
     );
+  }
+
+  private validExponents = [-3, -2, -1, 2, 3];
+
+  visitPow(pow: BinaryExpression): boolean {
+    // 乘方的底不能为0，指数必须是在[-3,3]范围内的整数且不能为0或1
+    const left = pow.getLeft().calculate();
+    let right = pow.getRight().calculate();
+
+    // 尝试修正而不是反复生成
+    while (!checkExponent(right as Fraction)) {
+      right = new Integer(this.validExponents[randomInt(this.validExponents.length - 1)]);
+      pow.setRight(right);
+    }
+
+    return this.checkResult(!left.equals(0) && this.isValidNumber(left.pow(right)));
+
+    function checkExponent(exp: Fraction) {
+      const n = exp.getNumerator();
+      const d = exp.getDenominator();
+      return d === 1 && n >= -3 && n <= 3 && n !== 0 && n !== 1;
+    }
   }
 }

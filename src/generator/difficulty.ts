@@ -7,7 +7,7 @@
 
 import { Level, Operator } from "./const";
 import { RationalNumber } from "./interface";
-import { Integer } from "./number";
+import { Integer, Fraction } from "./number";
 import { BinaryExpression } from "./expression";
 import { ExpressionFactory } from "./expression-factory";
 import { randomInt } from "./utils";
@@ -83,12 +83,47 @@ export class MediumStrategy implements DifficultyStrategy {
   }
 }
 
+/**
+ * 高级难度：百以内加减乘除和乘方（4 ^ 2 = 16），带负数，带分数，简单乘方（-3~3），最多6个运算符，结果可有分数
+ */
+export class HardStrategy implements DifficultyStrategy {
+  /** 单例模式 */
+  private static instance: HardStrategy;
+  static getInstance(): HardStrategy {
+    if (!this.instance) this.instance = new HardStrategy();
+    return this.instance;
+  }
+
+  private operators = [
+    Operator.Addition,
+    Operator.Subtraction,
+    Operator.Multiplication,
+    Operator.Division,
+    Operator.Power
+  ];
+
+  getDifficulty(): Level {
+    return Level.High;
+  }
+  randomNumber(): RationalNumber {
+    return randomInt(0, 1)
+      ? new Integer(randomInt(-99, 99))
+      : new Fraction(randomInt(-99, 99), randomInt(2, 99));
+  }
+  randomExpression(): BinaryExpression {
+    return ExpressionFactory.getInstance().randomExpression(this.operators);
+  }
+  randomOperatorCount(): number {
+    return randomInt(2, 6);
+  }
+}
+
 /** 难度策略工厂 */
 export class StrategyFactory implements DifficultyStrategy {
   private strategyByLevel = {
-    [EasyStrategy.getInstance().getDifficulty()]: EasyStrategy.getInstance(),
-    [MediumStrategy.getInstance().getDifficulty()]: MediumStrategy.getInstance(),
-    [Level.High]: MediumStrategy.getInstance()
+    [Level.Low]: EasyStrategy.getInstance(),
+    [Level.Medium]: MediumStrategy.getInstance(),
+    [Level.High]: HardStrategy.getInstance()
   };
   private current!: DifficultyStrategy;
 
