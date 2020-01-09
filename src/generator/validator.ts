@@ -96,10 +96,16 @@ class ValidatorImp implements Visitor {
     const left = pow.getLeft().calculate();
     let right = pow.getRight().calculate();
 
-    // 尝试修正而不是反复生成
-    while (!checkExponent(right as Fraction)) {
-      right = new Integer(this.validExponents[randomInt(this.validExponents.length - 1)]);
-      pow.setRight(right);
+    if (!checkExponent(right as Fraction)) {
+      if (pow.getRight() instanceof BinaryExpression) {
+        return this.checkResult(false);
+      } else {
+        // 尝试修正而不是反复生成
+        do {
+          right = new Integer(this.validExponents[randomInt(this.validExponents.length - 1)]);
+          pow.setRight(right);
+        } while (!checkExponent(right as Fraction));
+      }
     }
 
     return this.checkResult(!left.equals(0) && this.isValidNumber(left.pow(right)));

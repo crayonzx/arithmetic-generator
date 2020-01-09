@@ -79,7 +79,7 @@ export class MediumStrategy implements DifficultyStrategy {
     return ExpressionFactory.getInstance().randomExpression(this.operators);
   }
   randomOperatorCount(): number {
-    return randomInt(1, 4);
+    return randomInt(2, 4);
   }
 }
 
@@ -114,7 +114,7 @@ export class HardStrategy implements DifficultyStrategy {
     return ExpressionFactory.getInstance().randomExpression(this.operators);
   }
   randomOperatorCount(): number {
-    return randomInt(2, 6);
+    return randomInt(3, 6);
   }
 }
 
