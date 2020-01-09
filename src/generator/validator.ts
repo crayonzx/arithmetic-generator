@@ -35,12 +35,6 @@ class ValidatorImp implements Visitor {
     console.assert(false);
     return true;
   }
-  private isZero(expression: Expression): boolean {
-    return expression.calculate().equals(0);
-  }
-  private isOne(expression: Expression): boolean {
-    return expression.calculate().equals(1);
-  }
 
   private checkResult(result: boolean) {
     if (!result) this.isValid = result;
@@ -58,35 +52,39 @@ class ValidatorImp implements Visitor {
     return true;
   }
   visitAdd(add: BinaryExpression): boolean {
+    // 加法两边不能为0
+    const left = add.getLeft().calculate();
+    const right = add.getRight().calculate();
     return this.checkResult(
-      !this.isZero(add.getLeft()) &&
-        !this.isZero(add.getRight()) &&
-        this.isValidNumber(add.calculate())
+      !left.equals(0) && !right.equals(0) && this.isValidNumber(left.add(right))
     );
   }
   visitSub(sub: BinaryExpression): boolean {
+    // 减法两边不能为0
+    const left = sub.getLeft().calculate();
+    const right = sub.getRight().calculate();
     return this.checkResult(
-      !this.isZero(sub.getLeft()) &&
-        !this.isZero(sub.getRight()) &&
-        this.isValidNumber(sub.calculate())
+      !(left.equals(0) || right.equals(0)) && this.isValidNumber(left.sub(right))
     );
   }
   visitMul(mul: BinaryExpression): boolean {
+    // 乘法两边不能为0或1
+    const left = mul.getLeft().calculate();
+    const right = mul.getRight().calculate();
     return this.checkResult(
-      !this.isZero(mul.getLeft()) &&
-        !this.isZero(mul.getRight()) &&
-        !this.isOne(mul.getLeft()) &&
-        !this.isOne(mul.getRight()) &&
-        this.isValidNumber(mul.calculate())
+      !(left.equals(0) || right.equals(0)) &&
+        !(left.equals(1) || right.equals(1)) &&
+        this.isValidNumber(left.mul(right))
     );
   }
   visitDiv(div: BinaryExpression): boolean {
-    // 除法的除数不能为0
+    // 除法两边不能为0，除数不能为1
+    const left = div.getLeft().calculate();
+    const right = div.getRight().calculate();
     return this.checkResult(
-      !this.isZero(div.getLeft()) &&
-        !this.isZero(div.getRight()) &&
-        !this.isOne(div.getRight()) &&
-        this.isValidNumber(div.calculate())
+      !(left.equals(0) || right.equals(0)) &&
+        !right.equals(1) &&
+        this.isValidNumber(left.div(right))
     );
   }
 }

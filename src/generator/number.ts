@@ -48,9 +48,17 @@ export class Fraction implements RationalNumber {
     return Fraction.newFraction(this.value.mul(rhs.value));
   }
   div(rhs: Fraction): Fraction {
+    // 0不能为除数
+    if (rhs.value.equals(0)) {
+      return new Fraction(NaN, 1);
+    }
     return Fraction.newFraction(this.value.div(rhs.value));
   }
   pow(rhs: Fraction): Fraction {
+    // 0的非正指数幂没有意义
+    if (this.value.equals(0) && rhs.value.compare(0) <= 0) {
+      return new Fraction(NaN, 1);
+    }
     return Fraction.newFraction(this.value.pow(rhs.value));
   }
 

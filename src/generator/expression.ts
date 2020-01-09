@@ -7,7 +7,7 @@
 
 import { Operator, Priority } from "./const";
 import { Expression, RationalNumber, Visitor } from "./interface";
-import { Integer, Fraction } from "./number";
+import { Integer } from "./number";
 
 /** 二元表达式 */
 export abstract class BinaryExpression implements Expression {
@@ -165,10 +165,6 @@ export class DivExpression extends BinaryExpression {
   }
 
   calculate() {
-    const rightValue = this.right.calculate();
-    if (rightValue.equals(0)) {
-      return new Fraction(NaN, 1);
-    }
     return this.left.calculate().div(this.right.calculate());
   }
 

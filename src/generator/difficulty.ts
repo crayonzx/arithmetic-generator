@@ -24,7 +24,9 @@ export interface DifficultyStrategy {
   randomOperatorCount(): number;
 }
 
-/** 简单难度 */
+/**
+ * 低级难度：百以内加减法，带负数，最多2个运算符
+ */
 export class EasyStrategy implements DifficultyStrategy {
   /** 单例模式 */
   private static instance: EasyStrategy;
@@ -49,7 +51,9 @@ export class EasyStrategy implements DifficultyStrategy {
   }
 }
 
-/** 中等难度 */
+/**
+ * 中等难度：百以内加减乘除，带负数，最多4个运算符，结果可有分数
+ */
 export class MediumStrategy implements DifficultyStrategy {
   /** 单例模式 */
   private static instance: MediumStrategy;
