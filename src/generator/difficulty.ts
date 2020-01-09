@@ -10,6 +10,7 @@ import { Integer } from "./number";
 import { BinaryExpression, AddExpression } from "./expression";
 import { randomInt } from "./utils";
 
+/** 难度策略接口 */
 export interface DifficultyStrategy {
   /** 获取难度 */
   getDifficulty(): Level;
@@ -21,7 +22,8 @@ export interface DifficultyStrategy {
   randomOperatorCount(): number;
 }
 
-export class DifficultyStrategy implements DifficultyStrategy {
+/** 简单难度 */
+export class LowDifficultyStrategy implements DifficultyStrategy {
   getDifficulty(): Level {
     return Level.Low;
   }
@@ -43,7 +45,7 @@ export class StrategyFactory implements DifficultyStrategy {
 
   constructor() {
     this.difficultyStrategies = {} as StrategyFactory["difficultyStrategies"];
-    [DifficultyStrategy].forEach(difficultyClass => {
+    [LowDifficultyStrategy].forEach(difficultyClass => {
       const difficulty = new difficultyClass();
       this.difficultyStrategies[difficulty.getDifficulty()] = difficulty;
     });

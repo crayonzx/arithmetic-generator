@@ -7,6 +7,7 @@ import { Expression } from "./interface";
 import { BinaryExpression } from "./expression";
 import { randomInt } from "./utils";
 
+/** 试卷 */
 export class ExamPaper {
   expressions: BinaryExpression[];
 
@@ -29,7 +30,7 @@ export class Generator {
     this.strategy = strategy;
   }
 
-  generate(): BinaryExpression {
+  private generate(): BinaryExpression {
     /** 剩余未生成的表达式的个数 */
     let count = this.strategy.randomOperatorCount();
 

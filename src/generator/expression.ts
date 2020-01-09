@@ -1,5 +1,7 @@
 /**
- * 表达式
+ * 二元表达式
+ *
+ * 组合模式
  */
 
 import { Operator, Priority } from "./const";

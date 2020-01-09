@@ -1,5 +1,7 @@
 /**
  * 有理数：整数和分数
+ *
+ * 适配器模式
  */
 
 import { default as JSFraction } from "fraction.js";
@@ -7,7 +9,11 @@ import { default as JSFraction } from "fraction.js";
 import { Priority } from "./const";
 import { RationalNumber } from "./interface";
 
-/** 分数 */
+/**
+ * 分数
+ *
+ * 对象适配器模式（区别于类模式）
+ */
 export class Fraction implements RationalNumber {
   private value: JSFraction;
 
