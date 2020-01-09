@@ -24,7 +24,7 @@ export /*const*/ enum Priority {
 
 /** 难度等级 */
 export /*const*/ enum Level {
-  Low = 1,
-  Medium = 2,
-  High = 3
+  Low = "L",
+  Medium = "M",
+  High = "H"
 }

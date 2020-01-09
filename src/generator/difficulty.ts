@@ -83,7 +83,8 @@ export class MediumStrategy implements DifficultyStrategy {
 export class StrategyFactory implements DifficultyStrategy {
   private strategyByLevel = {
     [EasyStrategy.getInstance().getDifficulty()]: EasyStrategy.getInstance(),
-    [MediumStrategy.getInstance().getDifficulty()]: MediumStrategy.getInstance()
+    [MediumStrategy.getInstance().getDifficulty()]: MediumStrategy.getInstance(),
+    [Level.High]: MediumStrategy.getInstance()
   };
   private current!: DifficultyStrategy;
 
