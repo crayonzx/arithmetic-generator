@@ -4,7 +4,7 @@ import { StrategyFactory, PaperGenerator, Level } from "./generator";
 
 const generator = new PaperGenerator();
 const strategy = new StrategyFactory();
-strategy.setDifficulty(Level.Low);
+strategy.setDifficulty(Level.Medium);
 generator.setStrategy(strategy);
 
 const App: React.FC = () => {

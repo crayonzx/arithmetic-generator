@@ -49,10 +49,41 @@ export class EasyStrategy implements DifficultyStrategy {
   }
 }
 
+/** 中等难度 */
+export class MediumStrategy implements DifficultyStrategy {
+  /** 单例模式 */
+  private static instance: MediumStrategy;
+  static getInstance(): MediumStrategy {
+    if (!this.instance) this.instance = new MediumStrategy();
+    return this.instance;
+  }
+
+  private operators = [
+    Operator.Addition,
+    Operator.Subtraction,
+    Operator.Multiplication,
+    Operator.Division
+  ];
+
+  getDifficulty(): Level {
+    return Level.Medium;
+  }
+  randomNumber(): RationalNumber {
+    return new Integer(randomInt(-99, 99));
+  }
+  randomExpression(): BinaryExpression {
+    return ExpressionFactory.getInstance().randomExpression(this.operators);
+  }
+  randomOperatorCount(): number {
+    return randomInt(1, 4);
+  }
+}
+
 /** 难度策略工厂 */
 export class StrategyFactory implements DifficultyStrategy {
   private strategyByLevel = {
-    [EasyStrategy.getInstance().getDifficulty()]: EasyStrategy.getInstance()
+    [EasyStrategy.getInstance().getDifficulty()]: EasyStrategy.getInstance(),
+    [MediumStrategy.getInstance().getDifficulty()]: MediumStrategy.getInstance()
   };
   private current!: DifficultyStrategy;
 
