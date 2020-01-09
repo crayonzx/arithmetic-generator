@@ -12,6 +12,8 @@ export interface Expression {
   calculate(): RationalNumber;
   /** 打印输出字符串 */
   print(): string;
+  /** 比较两个表达式是否相同或等价 */
+  equals(rhs: Expression): boolean;
 }
 
 /** 有理数，它也是一种特殊的表达式 */

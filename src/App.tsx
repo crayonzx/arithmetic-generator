@@ -1,8 +1,8 @@
 import React from "react";
 
-import { StrategyFactory, Generator, Level } from "./generator";
+import { StrategyFactory, PaperGenerator, Level } from "./generator";
 
-const generator = new Generator();
+const generator = new PaperGenerator();
 const strategy = new StrategyFactory();
 strategy.setDifficulty(Level.Low);
 generator.setStrategy(strategy);

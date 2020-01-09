@@ -23,14 +23,14 @@ export class ExamPaper {
 }
 
 /** 表达式生成器 */
-export class Generator {
+export class ExpressionGenerator {
   private strategy!: DifficultyStrategy;
 
   setStrategy(strategy: DifficultyStrategy) {
     this.strategy = strategy;
   }
 
-  private generate(): BinaryExpression {
+  generate(): BinaryExpression {
     /** 剩余未生成的表达式的个数 */
     let count = this.strategy.randomOperatorCount();
 
@@ -69,8 +69,19 @@ export class Generator {
       };
     }
   }
+}
 
+/** 试卷生成器 */
+export class PaperGenerator extends ExpressionGenerator {
   generatePaper(expressionCount: number): ExamPaper {
-    return new ExamPaper(Array.from(Array(Math.floor(expressionCount))).map(() => this.generate()));
+    const expressions: BinaryExpression[] = [];
+    while (expressionCount > 0) {
+      const newExpression = this.generate();
+      if (expressions.every(exist => !exist.equals(newExpression))) {
+        expressions.push(newExpression);
+        expressionCount--;
+      }
+    }
+    return new ExamPaper(expressions);
   }
 }

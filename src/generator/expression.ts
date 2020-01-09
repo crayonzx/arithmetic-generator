@@ -51,6 +51,23 @@ export abstract class BinaryExpression implements Expression {
   print(): string {
     return `${this.printLeft()} ${this.getOperator()} ${this.printRight()}`;
   }
+
+  /** 是否满足交换律 */
+  abstract isCommutative(): boolean;
+
+  equals(rhs: Expression): boolean {
+    if (rhs instanceof BinaryExpression) {
+      if (this.getOperator() === rhs.getOperator()) {
+        if (this.left.equals(rhs.left) && this.right.equals(rhs.right)) {
+          return true;
+        }
+        if (this.isCommutative() && this.left.equals(rhs.right) && this.right.equals(rhs.left)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }
 
 export class AddExpression extends BinaryExpression {
@@ -64,5 +81,9 @@ export class AddExpression extends BinaryExpression {
 
   calculate() {
     return this.left.calculate().add(this.right.calculate());
+  }
+
+  isCommutative(): boolean {
+    return true;
   }
 }

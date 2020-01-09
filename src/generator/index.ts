@@ -1,3 +1,3 @@
 export * from "./const";
 export { StrategyFactory } from "./difficulty";
-export { Generator } from "./generator";
+export { ExpressionGenerator, PaperGenerator } from "./generator";

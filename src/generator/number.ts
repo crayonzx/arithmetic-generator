@@ -7,7 +7,7 @@
 import { default as JSFraction } from "fraction.js";
 
 import { Priority } from "./const";
-import { RationalNumber } from "./interface";
+import { RationalNumber, Expression } from "./interface";
 
 /**
  * 分数
@@ -62,6 +62,13 @@ export class Fraction implements RationalNumber {
 
   toString() {
     return `${this.value.toFraction(false)}`;
+  }
+
+  equals(rhs: Expression) {
+    if (rhs instanceof Fraction) {
+      return this.value.equals(rhs.value);
+    }
+    return false;
   }
 }
 
