@@ -7,21 +7,19 @@ const strategy = new StrategyFactory();
 strategy.setDifficulty(Level.Medium);
 generator.setStrategy(strategy);
 
+const paper = generator.generatePaper(30);
+
 const App: React.FC = () => {
   return (
     <div>
-      {generator
-        .generatePaper(30)
-        .printLines()
-        .map((line, i) => {
-          console.log(line);
-          return (
-            <span key={i}>
-              {line}
-              <br />
-            </span>
-          );
-        })}
+      {paper.printLines().map((line, i) => {
+        return (
+          <span key={i}>
+            {line}
+            <br />
+          </span>
+        );
+      })}
     </div>
   );
 };
