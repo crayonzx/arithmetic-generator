@@ -7,7 +7,7 @@
 import { default as JSFraction } from "fraction.js";
 
 import { Priority } from "./const";
-import { RationalNumber, Expression } from "./interface";
+import { RationalNumber, Expression, Visitor } from "./interface";
 
 /**
  * 分数
@@ -19,6 +19,16 @@ export class Fraction implements RationalNumber {
 
   constructor(numerator: number, denominator: number) {
     this.value = new JSFraction(numerator, denominator);
+  }
+
+  /** 获取分子 */
+  getNumerator(): number {
+    return this.value.n;
+  }
+
+  /** 获取分母 */
+  getDenominator(): number {
+    return this.value.d;
   }
 
   /** 由JSFraction创建分数 */
@@ -73,11 +83,19 @@ export class Fraction implements RationalNumber {
     }
     return false;
   }
+
+  accept(visitor: Visitor) {
+    return visitor.visitFraction(this);
+  }
 }
 
 /** 整数，它可以认为是分母为 1 的一种特殊分数 */
 export class Integer extends Fraction {
   constructor(value = 0) {
     super(Math.floor(value), 1);
+  }
+
+  accept(visitor: Visitor) {
+    return visitor.visitInteger(this);
   }
 }

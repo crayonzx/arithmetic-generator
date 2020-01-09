@@ -2,10 +2,11 @@
  * 二元表达式
  *
  * 组合模式
+ * 模板方法模式
  */
 
 import { Operator, Priority } from "./const";
-import { Expression, RationalNumber } from "./interface";
+import { Expression, RationalNumber, Visitor } from "./interface";
 import { Integer, Fraction } from "./number";
 
 /** 二元表达式 */
@@ -76,6 +77,12 @@ export abstract class BinaryExpression implements Expression {
     }
     return false;
   }
+
+  accept(visitor: Visitor): boolean {
+    return this.left.accept(visitor) && this.right.accept(visitor) && this.acceptThis(visitor);
+  }
+  /** 仅考虑访问自己（模板方法模式） */
+  protected abstract acceptThis(visitor: Visitor): boolean;
 }
 
 /** 加法 */
@@ -94,6 +101,10 @@ export class AddExpression extends BinaryExpression {
 
   isCommutative(): boolean {
     return true;
+  }
+
+  acceptThis(visitor: Visitor): boolean {
+    return visitor.visitAdd(this);
   }
 }
 
@@ -114,6 +125,10 @@ export class SubExpression extends BinaryExpression {
   isCommutative(): boolean {
     return false;
   }
+
+  acceptThis(visitor: Visitor): boolean {
+    return visitor.visitSub(this);
+  }
 }
 
 /** 乘法 */
@@ -132,6 +147,10 @@ export class MulExpression extends BinaryExpression {
 
   isCommutative(): boolean {
     return true;
+  }
+
+  acceptThis(visitor: Visitor): boolean {
+    return visitor.visitMul(this);
   }
 }
 
@@ -155,5 +174,9 @@ export class DivExpression extends BinaryExpression {
 
   isCommutative(): boolean {
     return false;
+  }
+
+  acceptThis(visitor: Visitor): boolean {
+    return visitor.visitDiv(this);
   }
 }
