@@ -7,7 +7,8 @@
 import { Level } from "./const";
 import { RationalNumber } from "./interface";
 import { Integer } from "./number";
-import { BinaryExpression, AddExpression } from "./expression";
+import { BinaryExpression } from "./expression";
+import { ExpressionFactory } from "./expression-factory";
 import { randomInt } from "./utils";
 
 /** 难度策略接口 */
@@ -31,7 +32,7 @@ export class LowDifficultyStrategy implements DifficultyStrategy {
     return new Integer(randomInt(-99, 99));
   }
   randomExpression(): BinaryExpression {
-    return new AddExpression();
+    return ExpressionFactory.getInstance().randomExpression(this.operators);
   }
   randomOperatorCount(): number {
     return randomInt(1, 2);

@@ -70,6 +70,7 @@ export abstract class BinaryExpression implements Expression {
   }
 }
 
+/** 加法 */
 export class AddExpression extends BinaryExpression {
   getOperator(): Operator {
     return Operator.Addition;
@@ -85,5 +86,24 @@ export class AddExpression extends BinaryExpression {
 
   isCommutative(): boolean {
     return true;
+  }
+}
+
+/** 减法 */
+export class SubExpression extends BinaryExpression {
+  getOperator(): Operator {
+    return Operator.Subtraction;
+  }
+
+  getPriority(): Priority {
+    return Priority.Subtraction;
+  }
+
+  calculate() {
+    return this.left.calculate().sub(this.right.calculate());
+  }
+
+  isCommutative(): boolean {
+    return false;
   }
 }
