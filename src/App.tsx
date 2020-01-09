@@ -15,7 +15,7 @@ const App: React.FC = () => {
       {paper.printLines().map((line, i) => {
         return (
           <span key={i}>
-            {line}
+            {`${i + 1}:  ${line}`}
             <br />
           </span>
         );
