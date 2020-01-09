@@ -35,19 +35,29 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <select value={level} onChange={handleSelectChange}>
-        <option value={Level.Low}>Low</option>
-        <option value={Level.Medium}>Medium</option>
-        <option value={Level.High}>High</option>
-      </select>
-      <input type="number" value={count} min={1} max={100} onChange={handleInputChange} />
-      <button onClick={handleClick}>Generate</button>
+      <div style={{ textAlign: "center" }}>
+        <select value={level} onChange={handleSelectChange}>
+          <option value={Level.Low}>Low</option>
+          <option value={Level.Medium}>Medium</option>
+          <option value={Level.High}>High</option>
+        </select>
+        <input type="number" value={count} min={1} max={100} onChange={handleInputChange} />
+        <button onClick={handleClick}>Generate</button>
+      </div>
       <hr></hr>
-      <ol>
-        {paper.printLines().map((line, i) => {
-          return <li key={i}>{line}</li>;
-        })}
-      </ol>
+      <table style={{ margin: "0 auto" }}>
+        <tr>
+          <td>
+            <div>
+              <ol>
+                {paper.printLines().map((line, i) => {
+                  return <li key={i}>{line}</li>;
+                })}
+              </ol>
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
   );
 };
