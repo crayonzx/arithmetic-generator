@@ -8,7 +8,7 @@
 import { DifficultyStrategy } from "./difficulty";
 import { Expression } from "./interface";
 import { BinaryExpression } from "./expression";
-import { Validator, ValidatorProxy } from "./validator";
+import { Validator } from "./validator";
 import { randomInt } from "./utils";
 
 /** 试卷 */
@@ -87,7 +87,7 @@ export class ExpressionGenerator implements Generator {
  */
 export class ValidatedGenerator implements Generator {
   private generator: Generator = new ExpressionGenerator();
-  private validator: Validator = new ValidatorProxy();
+  private validator: Validator = new Validator();
 
   setGenerator(generator: Generator) {
     this.generator = generator;
