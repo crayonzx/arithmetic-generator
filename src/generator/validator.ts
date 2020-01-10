@@ -2,7 +2,7 @@
  * 验证表达式是否适合作为考题
  *
  * 访问者模式
- * 桥接模式
+ * 代理模式
  */
 
 import { Expression, Visitor, RationalNumber } from "./interface";
@@ -10,19 +10,23 @@ import { Fraction, Integer } from "./number";
 import { BinaryExpression } from "./expression";
 import { randomInt } from "./utils";
 
-export class Validator {
-  private imp = new ValidatorImp();
+export interface Validator {
+  validate(expression: Expression): boolean;
+}
+
+export class ValidatorProxy implements Validator {
+  private validator = new RealValidator();
 
   validate(expression: Expression): boolean {
-    return this.imp.validateImp(expression);
+    return this.validator.validate(expression);
   }
 }
 
-class ValidatorImp implements Visitor {
+class RealValidator implements Visitor {
   /** 保存验证结果 */
   private isValid = true;
 
-  validateImp(expression: Expression): boolean {
+  validate(expression: Expression): boolean {
     this.isValid = true;
     expression.accept(this);
     return this.isValid;

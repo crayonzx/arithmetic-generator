@@ -1,13 +1,14 @@
 /**
  * 表达式生成器
  *
+ * 策略模式
  * 装饰模式
  */
 
 import { DifficultyStrategy } from "./difficulty";
 import { Expression } from "./interface";
 import { BinaryExpression } from "./expression";
-import { Validator } from "./validator";
+import { Validator, ValidatorProxy } from "./validator";
 import { randomInt } from "./utils";
 
 /** 试卷 */
@@ -33,7 +34,6 @@ export interface Generator {
 /** 表达式生成器 */
 export class ExpressionGenerator implements Generator {
   private strategy!: DifficultyStrategy;
-  protected validator = new Validator();
 
   setStrategy(strategy: DifficultyStrategy) {
     this.strategy = strategy;
@@ -87,7 +87,7 @@ export class ExpressionGenerator implements Generator {
  */
 export class ValidatedGenerator implements Generator {
   private generator: Generator = new ExpressionGenerator();
-  private validator: Validator = new Validator();
+  private validator: Validator = new ValidatorProxy();
 
   setGenerator(generator: Generator) {
     this.generator = generator;
