@@ -38,28 +38,53 @@ export class Fraction implements RationalNumber {
     return f;
   }
 
-  add(rhs: Fraction): Fraction {
-    return Fraction.newFraction(this.value.add(rhs.value));
-  }
-  sub(rhs: Fraction): Fraction {
-    return Fraction.newFraction(this.value.sub(rhs.value));
-  }
-  mul(rhs: Fraction): Fraction {
-    return Fraction.newFraction(this.value.mul(rhs.value));
-  }
-  div(rhs: Fraction): Fraction {
-    // 0不能为除数
-    if (rhs.value.equals(0)) {
-      return new Fraction(NaN, 1);
+  /** 遵循里氏替换原则，返回值的类型更加严格 */
+  add(rhs: RationalNumber): Fraction {
+    if (rhs instanceof Fraction) {
+      return Fraction.newFraction(this.value.add(rhs.value));
+    } else {
+      throw Error(`rhs is not a fraction, but is ${typeof rhs}`);
     }
-    return Fraction.newFraction(this.value.div(rhs.value));
   }
-  pow(rhs: Fraction): Fraction {
-    // 0的非正指数幂没有意义
-    if (this.value.equals(0) && rhs.value.compare(0) <= 0) {
-      return new Fraction(NaN, 1);
+  /** 遵循里氏替换原则，返回值的类型更加严格 */
+  sub(rhs: RationalNumber): Fraction {
+    if (rhs instanceof Fraction) {
+      return Fraction.newFraction(this.value.sub(rhs.value));
+    } else {
+      throw Error(`rhs is not a fraction, but is ${typeof rhs}`);
     }
-    return Fraction.newFraction(this.value.pow(rhs.value));
+  }
+  /** 遵循里氏替换原则，返回值的类型更加严格 */
+  mul(rhs: RationalNumber): Fraction {
+    if (rhs instanceof Fraction) {
+      return Fraction.newFraction(this.value.mul(rhs.value));
+    } else {
+      throw Error(`rhs is not a fraction, but is ${typeof rhs}`);
+    }
+  }
+  /** 遵循里氏替换原则，返回值的类型更加严格 */
+  div(rhs: RationalNumber): Fraction {
+    if (rhs instanceof Fraction) {
+      // 0不能为除数
+      if (rhs.value.equals(0)) {
+        return new Fraction(NaN, 1);
+      }
+      return Fraction.newFraction(this.value.div(rhs.value));
+    } else {
+      throw Error(`rhs is not a fraction, but is ${typeof rhs}`);
+    }
+  }
+  /** 遵循里氏替换原则，返回值的类型更加严格 */
+  pow(rhs: RationalNumber): Fraction {
+    if (rhs instanceof Fraction) {
+      // 0的非正指数幂没有意义
+      if (this.value.equals(0) && rhs.value.compare(0) <= 0) {
+        return new Fraction(NaN, 1);
+      }
+      return Fraction.newFraction(this.value.pow(rhs.value));
+    } else {
+      throw Error(`rhs is not a fraction, but is ${typeof rhs}`);
+    }
   }
 
   getPriority(): Priority {

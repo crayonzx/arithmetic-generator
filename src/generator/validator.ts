@@ -92,7 +92,7 @@ class ValidateVisitor implements Visitor {
     const left = pow.getLeft().calculate();
     let right = pow.getRight().calculate();
 
-    if (!checkExponent(right as Fraction)) {
+    if (!checkExponent(right)) {
       if (pow.getRight() instanceof BinaryExpression) {
         return this.checkResult(false);
       } else {
@@ -100,16 +100,20 @@ class ValidateVisitor implements Visitor {
         do {
           right = new Integer(this.validExponents[randomInt(this.validExponents.length - 1)]);
           pow.setRight(right);
-        } while (!checkExponent(right as Fraction));
+        } while (!checkExponent(right));
       }
     }
 
     return this.checkResult(!left.equals(0) && this.isValidNumber(left.pow(right)));
 
-    function checkExponent(exp: Fraction) {
-      const n = exp.getNumerator();
-      const d = exp.getDenominator();
-      return d === 1 && n >= -3 && n <= 3 && n !== 0 && n !== 1;
+    function checkExponent(exp: RationalNumber) {
+      if (exp instanceof Fraction) {
+        const n = exp.getNumerator();
+        const d = exp.getDenominator();
+        return d === 1 && n >= -3 && n <= 3 && n !== 0 && n !== 1;
+      } else {
+        throw Error(`rhs is not a fraction, but is ${typeof exp}`);
+      }
     }
   }
 }
