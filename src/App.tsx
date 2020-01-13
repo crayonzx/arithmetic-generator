@@ -46,17 +46,19 @@ const App: React.FC = () => {
       </div>
       <hr></hr>
       <table style={{ margin: "0 auto" }}>
-        <tr>
-          <td>
-            <div>
-              <ol>
-                {paper.printLines().map((line, i) => {
-                  return <li key={i}>{line}</li>;
-                })}
-              </ol>
-            </div>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>
+              <div>
+                <ol>
+                  {paper.printLines().map((line, i) => {
+                    return <li key={i}>{line}</li>;
+                  })}
+                </ol>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   );
