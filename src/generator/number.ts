@@ -1,7 +1,7 @@
 /**
  * 有理数：整数和分数
  *
- * 适配器模式
+ * （对象）适配器模式
  */
 
 import { default as JSFraction } from "fraction.js";
@@ -12,7 +12,7 @@ import { RationalNumber, Expression, Visitor } from "./interface";
 /**
  * 分数
  *
- * 对象适配器模式（区别于类模式）
+ * 对象适配器模式（区别于类模式，使用聚合而不是继承）
  */
 export class Fraction implements RationalNumber {
   private value: JSFraction;

@@ -33,10 +33,12 @@ export class ExpressionFactory {
     [new PowExpression().getOperator()]: PowExpression
   };
 
+  /** 给定运算符，产生新的表达式，简单工厂模式 */
   newExpression(operator: Operator): BinaryExpression {
     return new this.expressionByOperator[operator]();
   }
 
+  /** 给定一组可选运算符，随机选择其中一个来产生新的表达式 */
   randomExpression(candidates: Operator[]): BinaryExpression {
     return this.newExpression(candidates[randomInt(candidates.length - 1)]);
   }

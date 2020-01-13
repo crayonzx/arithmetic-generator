@@ -3,6 +3,7 @@
  *
  * 组合模式
  * 模板方法模式
+ * 访问者模式
  */
 
 import { Operator, Priority } from "./const";
@@ -12,9 +13,9 @@ import { Integer } from "./number";
 /** 二元表达式 */
 export abstract class BinaryExpression implements Expression {
   /** 左侧表达式 */
-  protected left: Expression = new Integer();
+  protected left: Expression = new Integer(); // 组合模式
   /** 右侧表达式 */
-  protected right: Expression = new Integer();
+  protected right: Expression = new Integer(); // 组合模式
 
   getLeft() {
     return this.left;
@@ -58,6 +59,7 @@ export abstract class BinaryExpression implements Expression {
   }
 
   print(): string {
+    // 模板方法模式，子类实现getOperator
     return `${this.printLeft()} ${this.getOperator()} ${this.printRight()}`;
   }
 
@@ -65,6 +67,7 @@ export abstract class BinaryExpression implements Expression {
   abstract isCommutative(): boolean;
 
   equals(rhs: Expression): boolean {
+    // 模板方法模式，子类实现getOperator、isCommutative
     if (rhs instanceof BinaryExpression) {
       if (this.getOperator() === rhs.getOperator()) {
         if (this.left.equals(rhs.left) && this.right.equals(rhs.right)) {
@@ -79,6 +82,8 @@ export abstract class BinaryExpression implements Expression {
   }
 
   accept(visitor: Visitor): boolean {
+    // 访问者模式
+    // 模板方法模式，子类实现acceptThis
     return this.left.accept(visitor) && this.right.accept(visitor) && this.acceptThis(visitor);
   }
   /** 仅考虑访问自己（模板方法模式） */

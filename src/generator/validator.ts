@@ -9,6 +9,7 @@ import { Fraction, Integer } from "./number";
 import { BinaryExpression } from "./expression";
 import { randomInt } from "./utils";
 
+/** 表达式验证器 */
 export class Validator {
   validate(expression: Expression): boolean {
     const visitor = new ValidateVisitor();
@@ -17,6 +18,7 @@ export class Validator {
   }
 }
 
+/** 验证器访问者，访问者模式 */
 class ValidateVisitor implements Visitor {
   /** 保存验证结果 */
   isValid = true;
@@ -82,6 +84,7 @@ class ValidateVisitor implements Visitor {
     );
   }
 
+  /** 有效的指数列表 */
   private validExponents = [-3, -2, -1, 2, 3];
 
   visitPow(pow: BinaryExpression): boolean {

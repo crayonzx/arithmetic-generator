@@ -10,7 +10,7 @@ export interface Expression {
   getPriority(): Priority;
   /** 计算结果 */
   calculate(): RationalNumber;
-  /** 打印输出字符串 */
+  /** 打印输出算式字符串 */
   print(): string;
   /** 比较两个表达式是否相同或等价 */
   equals(rhs: Expression): boolean;
@@ -27,7 +27,11 @@ export interface RationalNumber extends Expression {
   div(rhs: RationalNumber): RationalNumber;
   pow(rhs: RationalNumber): RationalNumber;
 
-  /** 比较两个表达式是否相同或等价 */
+  /**
+   * 比较两个表达式是否相同或等价
+   *
+   * 里氏替换原则，放宽了参数的类型约束，使之能够与普通数值比较
+   */
   equals(rhs: Expression | number): boolean;
 
   /** 转为字符串，与print的区别是它不会输出括号 */

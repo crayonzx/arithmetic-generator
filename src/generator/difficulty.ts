@@ -118,7 +118,13 @@ export class HardStrategy implements DifficultyStrategy {
   }
 }
 
-/** 难度策略工厂 */
+/**
+ * 难度策略工厂
+ *
+ * 策略工厂模式
+ * 工厂模式与策略模式的结合，实现不同策略间的快速切换
+ * 关键在于它同样实现了策略接口中的各种方法
+ */
 export class StrategyFactory implements DifficultyStrategy {
   private strategyByLevel = {
     [Level.Low]: EasyStrategy.getInstance(),
@@ -127,6 +133,7 @@ export class StrategyFactory implements DifficultyStrategy {
   };
   private current!: DifficultyStrategy;
 
+  /** 设置难度，从而在不同难度策略间快速切换 */
   setDifficulty(level: Level) {
     this.current = this.strategyByLevel[level];
   }

@@ -2,7 +2,7 @@
  * 表达式生成器
  *
  * 策略模式
- * 装饰模式
+ * 简化的装饰模式
  */
 
 import { DifficultyStrategy } from "./difficulty";
@@ -19,6 +19,7 @@ export class ExamPaper {
     this.expressions = expressions;
   }
 
+  /** 打印试卷，简单按行打印题目和结果 */
   printLines() {
     return this.expressions.map(expression => {
       return `${expression.print()} = ${expression.calculate().toString()}`;
@@ -27,11 +28,17 @@ export class ExamPaper {
 }
 
 export interface Generator {
+  /** 设置难度策略 */
   setStrategy(strategy: DifficultyStrategy): void;
+  /** 随机产生一个二元表达式 */
   generate(): BinaryExpression;
 }
 
-/** 表达式生成器 */
+/**
+ * 表达式生成器
+ *
+ * 策略模式
+ */
 export class ExpressionGenerator implements Generator {
   private strategy!: DifficultyStrategy;
 
@@ -83,7 +90,8 @@ export class ExpressionGenerator implements Generator {
 /**
  * 经过验证符合要求的表达式生成器
  *
- * 装饰模式
+ * 简化的装饰模式
+ * （注意是简化的）
  */
 export class ValidatedGenerator implements Generator {
   private generator: Generator = new ExpressionGenerator();
@@ -106,7 +114,11 @@ export class ValidatedGenerator implements Generator {
   }
 }
 
-/** 试卷生成器 */
+/**
+ * 试卷生成器
+ *
+ * “implements Generator”不是必须的，仅仅是因为恰好它也需要Generator的两个方法
+ */
 export class PaperGenerator implements Generator {
   private generator: Generator = new ValidatedGenerator();
 
@@ -122,6 +134,7 @@ export class PaperGenerator implements Generator {
     return this.generator.generate();
   }
 
+  /** 按照所需题目数量生成一份试卷 */
   generatePaper(expressionCount: number): ExamPaper {
     const expressions: BinaryExpression[] = [];
     while (expressionCount > 0) {
